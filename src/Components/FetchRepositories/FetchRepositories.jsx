@@ -21,9 +21,16 @@ class FetchRepositories extends Component {
 
   async getDataAxios() {
     for (let i = 0; i <= this.state.repositories.length; i++) {
-      const responseData = await axios.get(
-        `https://api.github.com/search/repositories?q=${this.state.repositories[i]}&sort=stars&order=des`
-      );
+      const responseData = await axios
+        .get(
+          `https://api.github.com/search/repositories?q=${this.state.repositories[i]}&sort=stars&order=des`
+        )
+        .catch((err) => {
+          if (err) {
+            this.setState({ fetchErr: true });
+            throw err;
+          }
+        });
       console.log(responseData);
     }
   }
