@@ -19,25 +19,17 @@ class FetchRepositories extends Component {
     fetchErr: false,
   };
 
-  componentDidMount() {
+  async getDataAxios() {
     for (let i = 0; i <= this.state.repositories.length; i++) {
-      axios
-        .get(
-          `https://api.github.com/search/repositories?q=${this.state[i]}&sort=stars&order=des`
-        )
-        .then((response) => {
-          console.log(response.data.items);
-        })
-        .catch((error) => {
-          if (error) {
-            this.setState({ fetchErr: true });
-            throw error;
-          }
-        });
+      const responseData = await axios.get(
+        `https://api.github.com/search/repositories?q=${this.state.repositories[i]}&sort=stars&order=des`
+      );
+      console.log(responseData);
     }
   }
 
   render() {
+    this.getDataAxios();
     return (
       <div>
         {this.state.fetchErr ? (
