@@ -17,21 +17,23 @@ class FetchRepositories extends Component {
       "chores-section",
     ],
     fetchErr: false,
+    pageNumber: 1,
   };
 
   async getDataAxios() {
-    for (let i = 0; i <= this.state.repositories.length; i++) {
-      const responseData = await axios
-        .get(
-          `https://api.github.com/search/repositories?q=${this.state.repositories[i]}&sort=stars&order=des`
-        )
-        .catch((err) => {
-          if (err) {
-            this.setState({ fetchErr: true });
-            throw err;
-          }
-        });
-      console.log(responseData);
+    const responseData = await axios.get(
+      `https://api.github.com/search/users?q=alex+repos:%3E30&page=${this.state.pageNumber}`
+    );
+    console.log(responseData);
+    for (let k = 0; k <= responseData.data.items.length; k++) {
+      let username = responseData.data.items[k].login;
+      console.log(username);
+      if (username === "alexkhazzam") {
+        alert("found");
+      } else {
+        this.setState({ pageNumber: this.state.pageNumber++ });
+        this.getDataAxios();
+      }
     }
   }
 
