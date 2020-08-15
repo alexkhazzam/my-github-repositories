@@ -23,10 +23,10 @@ class FetchRepositories extends Component {
     for (let i = 0; i <= this.state.repositories.length; i++) {
       axios
         .get(
-          `https://api.github.com/search/repositories?q=${this.state[i]}react-native&sort=stars&order=des`
+          `https://api.github.com/search/repositories?q=${this.state[i]}&sort=stars&order=des`
         )
         .then((response) => {
-          console.log(response);
+          console.log(response.data.items);
         })
         .catch((error) => {
           if (error) {
