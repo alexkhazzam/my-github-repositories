@@ -4,50 +4,54 @@ import Repository from "../Repository/Repository";
 
 class FetchRepositories extends Component {
   state = {
-    repositories: [
-      "imdb-api",
-      "internship-GET-req",
-      "screen-time-v2",
-      "node-movie-database",
-      "node-imdb-api",
-      "middleware-file-hopping",
-      "movie-time-v2",
-      "async-number-increase",
-      "tip-calculator",
-      "chores-section",
-    ],
+    repositoryData: [],
     fetchErr: false,
-    pageNumber: 1,
+    gitUsername: "alexkhazzam",
   };
 
-  async getDataAxios() {
-    const responseData = await axios.get(
-      `https://api.github.com/search/users?q=alex+repos:%3E30&page=${this.state.pageNumber}`
-    );
-    console.log(responseData);
-    for (let k = 0; k <= responseData.data.items.length; k++) {
-      let username = responseData.data.items[k].login;
-      console.log(username);
-      if (username === "alexkhazzam") {
-        alert("found");
-      } else {
-        this.setState({ pageNumber: this.state.pageNumber++ });
-        this.getDataAxios();
-      }
-    }
+  componentDidMount() {
+    axios
+      .get(
+        `https://api.github.com/users/${
+          this.state.gitUsername
+        }/repos?per_page=${100}`
+      )
+      .then((repoObj) => {
+        const repoData = [...this.state.repositoryData];
+        const responseData = repoObj.data;
+        responseData.forEach((repo) => {
+          repoData.push(repo);
+        });
+        this.setState({ repositoryData: repoData });
+      })
+      .catch((err) => {
+        if (err) {
+          this.setState({ fetchErr: true });
+          throw err;
+        }
+      });
   }
 
   render() {
-    this.getDataAxios();
-    return (
-      <div>
-        {this.state.fetchErr ? (
-          <p>Oops! Something went wrong.</p>
-        ) : (
-          <Repository />
-        )}
-      </div>
-    );
+    let repositories = <p>Oops! Something went wrong.</p>;
+    if (!this.state.fetchErr) {
+      repositories = this.state.repositoryData.map((repo) => {
+        return (
+          <Repository
+            title={repo.title}
+            author={repo.author}
+            description={repo.description}
+            forks={repo.forks}
+            stars={repo.stars}
+            appUrl={repo.url}
+            projUrl={repo.html_url}
+            recentCommit={repo.pushed_at}
+            key={repo.id}
+          />
+        );
+      });
+    }
+    return <div>{repositories}</div>;
   }
 }
 

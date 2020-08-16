@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+.repo {
+  text-align: center;
+  border: 2px solid #bebebe73;
+  width: 75%;
+  margin: 100px auto;
+  height: fit-content;
+  padding: 50px;
+  box-shadow: 1px 1px 2px grey;
+}
+
+.repo__header {
+  color: hsl(342, 100%, 60%);
+  font-weight: bold;
+}
+
+.repo__item {
+  color: black;
+}
