@@ -49,10 +49,11 @@
   width: 100%;
 }
 
-@media (min-width: 500px) {
+@media (min-width: 100px) and (max-width: 500px) {
   .svg {
     width: 30%;
     height: 100%;
+    border: 2px solid yellow;
   }
 }
 
@@ -92,7 +93,6 @@
   width: 75%;
   margin-right: auto;
   margin-left: auto;
-  position: relative;
   animation: 1s slide-left-pagination;
 }
 
@@ -103,5 +103,21 @@
 
   to {
     margin-left: 12.5%;
+  }
+}
+
+@media (min-width: 100px) and (max-width: 500px) {
+  .pagination {
+    height: 60px;
+  }
+
+  .previous-page,
+  .next-page {
+    height: 100%;
+  }
+
+  .pagination-container {
+    text-align: center;
+    padding-top: 25px;
   }
 }
