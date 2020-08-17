@@ -13,6 +13,7 @@ class FetchRepositories extends Component {
     invalidInput: null,
     requestComplete: null,
     repositoryCount: 0,
+    paginationSection: null,
   };
 
   fetchRepositories = (event, bool) => {
@@ -87,6 +88,22 @@ class FetchRepositories extends Component {
       repositories = null;
     }
 
+    if (this.state.requestComplete === true && !this.state.fetchErr) {
+      this.state.paginationSection = (
+        <div className="pagination">
+          <button className="previous-page btn btn-info">Previous Page</button>
+          <input
+            type="readonly"
+            className="form-control pagination-container"
+            placeholder="Page Count: 10000"
+          />
+          <button className="next-page btn btn-info">Next Page</button>
+        </div>
+      );
+    } else {
+      this.state.paginationSection = null;
+    }
+
     return (
       <div className="main-container">
         <div className="mt-5 form-wrapper">
@@ -109,19 +126,7 @@ class FetchRepositories extends Component {
             </button>
           </form>
         </div>
-        {this.state.requestComplete === true ? (
-          <div className="pagination">
-            <button className="previous-page btn btn-info">
-              Previous Page
-            </button>
-            <input
-              type="readonly"
-              className="form-control pagination-container"
-              placeholder="Page Count: 10000"
-            />
-            <button className="next-page btn btn-info">Next Page</button>
-          </div>
-        ) : null}
+        {this.state.paginationSection}
         {this.state.requestComplete === false ? (
           <div className="svg-container">
             <SVG1 className="svg" />
