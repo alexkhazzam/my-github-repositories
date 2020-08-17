@@ -1,0 +1,35 @@
+.form-wrapper {
+  text-align: center;
+  overflow: hidden;
+}
+
+.form-container {
+  text-align: left;
+  width: 30%;
+  margin: auto;
+  animation: slide-left 1s;
+}
+
+.form-container input:first-of-type {
+  margin-bottom: 0.2rem;
+  width: 100%;
+}
+
+.form-container button:first-of-type {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-container p:first-of-type {
+  color: red;
+}
+
+@keyframes slide-left {
+  from {
+    margin-left: 100%;
+  }
+
+  to {
+    margin-left: 35%;
+  }
+}
