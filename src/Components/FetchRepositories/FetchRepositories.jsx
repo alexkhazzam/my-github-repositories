@@ -9,7 +9,7 @@ class FetchRepositories extends Component {
   state = {
     repositoryData: [],
     fetchErr: false,
-    gitUsername: null,
+    gitUsername: "",
     invalidInput: null,
     requestComplete: null,
     HTTPRequests: 0,
@@ -17,7 +17,7 @@ class FetchRepositories extends Component {
 
   fetchRepositories = (event) => {
     event.preventDefault();
-    if (this.state.gitUsername === null) {
+    if (this.state.gitUsername === "") {
       return this.setState({ invalidInput: <p>This is a required field.</p> });
     } else {
       this.setState({ repositoryData: [] });
@@ -59,18 +59,20 @@ class FetchRepositories extends Component {
       repositories = this.state.repositoryData.map((repo) => {
         return (
           <Repository
-            title={repo.title}
-            author={repo.author}
+            title={repo.name}
             description={repo.description}
             forks={repo.forks}
-            stars={repo.stars}
-            appUrl={repo.url}
+            stars={repo.stargazers_count}
+            language={repo.language}
+            appUrl={repo.svn_url}
             projUrl={repo.html_url}
             recentCommit={repo.pushed_at}
             key={repo.id}
           />
         );
       });
+    } else if (this.state.gitUsername === "") {
+      repositories = null;
     }
 
     return (
@@ -102,7 +104,9 @@ class FetchRepositories extends Component {
             <SVG1 className="svg" />
           </div>
         ) : null}
-        {this.state.fetchErr ? null : repositories}
+        <div className="repositories">
+          {this.state.fetchErr ? null : repositories}
+        </div>
       </div>
     );
   }
