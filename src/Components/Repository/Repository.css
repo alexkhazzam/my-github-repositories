@@ -22,6 +22,12 @@ body {
   margin-right: auto;
 }
 
+@media (min-width: 100px) and (max-width: 640px) {
+  .repo {
+    width: 80%;
+  }
+}
+
 @keyframes slide-right {
   from {
     margin-left: 100%;
