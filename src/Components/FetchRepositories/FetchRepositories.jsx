@@ -12,7 +12,7 @@ class FetchRepositories extends Component {
     gitUsername: "",
     invalidInput: null,
     requestComplete: null,
-    HTTPRequests: 0,
+    repositoryCount: 0,
   };
 
   fetchRepositories = (event) => {
@@ -30,14 +30,20 @@ class FetchRepositories extends Component {
           }/repos?per_page=${100}`
         )
         .then((repoObj) => {
+          let repoCount = 0;
           this.setState({ fetchErr: false });
           const repoData = [...this.state.repositoryData];
           const responseData = repoObj.data;
           responseData.forEach((repo) => {
+            repoCount++;
             repoData.push(repo);
           });
           this.setState({ repositoryData: repoData });
           this.setState({ requestComplete: true });
+          this.setState({
+            repositoryCount: this.state.repositoryCount + repoCount,
+          });
+          console.log(this.state.repositoryCount);
         })
         .catch((err) => {
           if (err) {
