@@ -74,7 +74,7 @@ class FetchRepositories extends Component {
     }
 
     return (
-      <div>
+      <div className="main-container">
         <div className="mt-5 form-wrapper">
           <form className="form-container">
             <input
@@ -97,9 +97,9 @@ class FetchRepositories extends Component {
         </div>
         {this.state.requestComplete === false ? (
           <div className="svg-container">
-            <SVG1 />
-            <SVG1 />
-            <SVG1 />
+            <SVG1 className="svg" />
+            <SVG1 className="svg" />
+            <SVG1 className="svg" />
           </div>
         ) : null}
         {this.state.fetchErr ? null : repositories}

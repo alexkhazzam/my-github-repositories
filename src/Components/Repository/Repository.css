@@ -27,4 +27,5 @@ h3:first-of-type {
 .repo__item {
   color: rgb(38, 38, 38);
   text-align: left;
+  max-width: 100%;
 }

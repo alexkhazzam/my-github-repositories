@@ -37,4 +37,21 @@
 .svg-container {
   text-align: center;
   margin-top: 25px;
+  width: 100%;
+}
+
+.svg {
+  display: block;
+  margin: auto;
+}
+
+.main-container {
+  width: 100%;
+}
+
+@media (min-width: 500px) {
+  .svg {
+    width: 50%;
+    height: 100%;
+  }
 }
