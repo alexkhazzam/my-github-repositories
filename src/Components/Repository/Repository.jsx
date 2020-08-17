@@ -64,42 +64,72 @@ const Repository = (props) => {
     <div className={"repo"}>
       <h2 className={"repo__header"}>{props.title}</h2>
       <p className={"repo__item description"}>
-        <img src={descriptionImg} width="20" height="20" className={"icon"} />
+        <img
+          src={descriptionImg}
+          width="20"
+          height="20"
+          className={"icon"}
+          alt=""
+        />
         <span>Description: </span>
         {props.description}
       </p>
       <p className={"repo__item"}>
-        <img src={forkImg} width="20" height="20" className={"icon"} />
+        <img src={forkImg} width="20" height="20" className={"icon"} alt="" />
         <span>Forks: </span>
         {props.forks}
       </p>
       <p className={"repo__item"}>
-        <img src={starImg} width="20" height="20" className={"icon"} />
+        <img src={starImg} width="20" height="20" className={"icon"} alt="" />
         <span>Stargazers Count: </span>
         {props.stars}
       </p>
       <p className={"repo__item"}>
-        <img src={languageImg} width="20" height="20" className={"icon"} />
+        <img
+          src={languageImg}
+          width="20"
+          height="20"
+          className={"icon"}
+          alt=""
+        />
         <span>Language: </span>
         {props.language}
         <span className={color}></span>
       </p>
       <p className={"repo__item"}>
-        <img src={websiteUrlImg} width="20" height="20" className={"icon"} />
+        <img
+          src={websiteUrlImg}
+          width="20"
+          height="20"
+          className={"icon"}
+          alt=""
+        />
         <span>Website URL: </span>
         <a href={props.appUrl} target="_blank" rel="noopenrer noreferrer">
           {props.appUrl}
         </a>
       </p>
       <p className={"repo__item"}>
-        <img src={codeUrlImg} width="20" height="20" className={"icon"} />
+        <img
+          src={codeUrlImg}
+          width="20"
+          height="20"
+          className={"icon"}
+          alt=""
+        />
         <span>Code URL: </span>
         <a href={props.projUrl} target="_blank" rel="noopenrer noreferrer">
           {props.projUrl}
         </a>
       </p>
       <p className={"repo__item"}>
-        <img src={recentCommitImg} width="20" height="20" className={"icon"} />
+        <img
+          src={recentCommitImg}
+          width="20"
+          height="20"
+          className={"icon"}
+          alt=""
+        />
         <span>Most Recent Commit: </span>
         {props.recentCommit}
       </p>

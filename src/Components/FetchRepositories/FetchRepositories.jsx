@@ -14,7 +14,8 @@ class FetchRepositories extends Component {
     requestComplete: null,
     repositoryCount: 0,
     paginationSection: null,
-    pages: 0,
+    totalPages: 0,
+    pageNumber: 0,
   };
 
   fetchRepositories = (event, bool) => {
@@ -31,14 +32,12 @@ class FetchRepositories extends Component {
         .get(
           `https://api.github.com/users/${
             this.state.gitUsername
-          }/repos?per_page=${100}`
+          }/repos?per_page=${100}&page=${this.state.pageNumber}`
         )
         .then((repoObj) => {
-          let repoCount;
-          if (!bool) {
-            repoCount = this.state.repositoryCount;
-          } else {
-            repoCount = 0;
+          let repoCount = 0;
+          if (bool) {
+            this.setState({ repositoryCount: 0 });
           }
           this.setState({ fetchErr: false });
           const repoData = [...this.state.repositoryData];
@@ -52,16 +51,12 @@ class FetchRepositories extends Component {
           this.setState({
             repositoryCount: this.state.repositoryCount + repoCount,
           });
-          // if (repoCount === 100) {
-          //   this.setState({ pages: this.state.pages + 1 });
-          // }
-          // if (this.state.repositoryCount / 100 <= this.state.pages) {
-          //   console.log(
-          //     `finished ${this.state.pages} ${this.state.repositoryCount}`
-          //   );
-          //   console.log(this.state.repositoryCount / 100);
-          //   this.fetchRepositories(null, false);
-          // }
+          console.log(this.state.repositoryCount);
+          console.log(this.state.pageNumber);
+          if (repoCount === 100) {
+            this.state.pageNumber++;
+            this.fetchRepositories(null, false);
+          }
         })
         .catch((err) => {
           if (err) {
@@ -112,7 +107,7 @@ class FetchRepositories extends Component {
           <input
             type="readonly"
             className="form-control pagination-container"
-            placeholder="Page Count: 10000"
+            placeholder={`Page Count: ${this.state.totalPages}`}
           />
           <button className="next-page btn btn-info">Next Page</button>
         </div>
