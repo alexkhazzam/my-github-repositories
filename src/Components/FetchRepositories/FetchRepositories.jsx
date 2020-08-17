@@ -88,7 +88,7 @@ class FetchRepositories extends Component {
             forks={repo.forks}
             stars={repo.stargazers_count}
             language={repo.language}
-            appUrl={`${this.state.gitUsername}.github.io/${repo.name}`}
+            appUrl={`https://${this.state.gitUsername}.github.io/${repo.name}`}
             projUrl={repo.html_url}
             recentCommit={repo.pushed_at}
             key={repo.id}
@@ -139,7 +139,7 @@ class FetchRepositories extends Component {
               type="submit"
               onClick={(event) => this.fetchRepositories(event, true)}
             >
-              Fetch Repos
+              Fetch Repositories
             </button>
           </form>
         </div>

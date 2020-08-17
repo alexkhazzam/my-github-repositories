@@ -48,6 +48,7 @@ h2 {
   color: rgb(38, 38, 38);
   text-align: left;
   max-width: 100%;
+  vertical-align: middle;
 }
 
 .repo__item:first-of-type {
@@ -56,4 +57,72 @@ h2 {
 
 .repo__item span {
   font-weight: bold;
+}
+
+.icon {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.yellow {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: yellow;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.blue {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: blue;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.brown {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: brown;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.red {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.purple {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: purple;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.orange {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: orange;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.none {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: none;
+  display: inline-block;
+  margin-left: 5px;
 }
