@@ -15,8 +15,10 @@ class FetchRepositories extends Component {
     repositoryCount: 0,
   };
 
-  fetchRepositories = (event) => {
-    event.preventDefault();
+  fetchRepositories = (event, bool) => {
+    if (bool) {
+      event.preventDefault();
+    }
     if (this.state.gitUsername === "") {
       return this.setState({ invalidInput: <p>This is a required field.</p> });
     } else {
@@ -44,6 +46,10 @@ class FetchRepositories extends Component {
             repositoryCount: this.state.repositoryCount + repoCount,
           });
           console.log(this.state.repositoryCount);
+
+          //   if (repoCount === 100) {
+          //     this.fetchRepositories(null, false);
+          //   }
         })
         .catch((err) => {
           if (err) {
@@ -97,12 +103,25 @@ class FetchRepositories extends Component {
             <button
               className="btn btn-info"
               type="submit"
-              onClick={(event) => this.fetchRepositories(event)}
+              onClick={(event) => this.fetchRepositories(event, true)}
             >
               Fetch Repos
             </button>
           </form>
         </div>
+        {this.state.requestComplete === true ? (
+          <div className="pagination">
+            <button className="previous-page btn btn-info">
+              Previous Page
+            </button>
+            <input
+              type="readonly"
+              className="form-control pagination-container"
+              placeholder="Page Count: 10000"
+            />
+            <button className="next-page btn btn-info">Next Page</button>
+          </div>
+        ) : null}
         {this.state.requestComplete === false ? (
           <div className="svg-container">
             <SVG1 className="svg" />
@@ -110,9 +129,7 @@ class FetchRepositories extends Component {
             <SVG1 className="svg" />
           </div>
         ) : null}
-        <div className="repositories">
-          {this.state.fetchErr ? null : repositories}
-        </div>
+        <div>{this.state.fetchErr ? null : repositories}</div>
       </div>
     );
   }

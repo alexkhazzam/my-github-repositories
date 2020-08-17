@@ -59,15 +59,49 @@
 .repositories {
   text-align: center;
   width: 100%;
-  animation: slide-up 1s;
 }
 
-@keyframes slide-up {
+.pagination-container {
+  width: fit-content;
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0px;
+  border-right: none;
+  border-left: none;
+  border-bottom: none;
+}
+
+.previous-page,
+.next-page {
+  height: 2.35rem;
+  vertical-align: middle;
+  border-radius: 0px;
+  border-bottom: none;
+}
+
+.previous-page {
+  border-top-left-radius: 0.25rem;
+}
+
+.next-page {
+  border-top-right-radius: 0.25rem;
+}
+
+.pagination {
+  margin-top: 100px;
+  width: 75%;
+  margin-right: auto;
+  margin-left: auto;
+  position: relative;
+  animation: 1s slide-left-pagination;
+}
+
+@keyframes slide-left-pagination {
   from {
-    margin-top: 100%;
+    margin-left: 100%;
   }
 
   to {
-    margin-top: 0%;
+    margin-left: 12.5%;
   }
 }
