@@ -23,13 +23,13 @@ const Repository = (props) => {
       </p>
       <p className={"repo__item"}>
         <span>Website URL: </span>
-        <a href={props.appUrl} target="_blank">
+        <a href={props.appUrl} target="_blank" rel="noopenrer noreferrer">
           {props.appUrl}
         </a>
       </p>
       <p className={"repo__item"}>
         <span>Code URL: </span>
-        <a href={props.projUrl} target="_blank">
+        <a href={props.projUrl} target="_blank" rel="noopenrer noreferrer">
           {props.projUrl}
         </a>
       </p>

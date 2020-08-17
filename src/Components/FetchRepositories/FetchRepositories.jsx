@@ -14,6 +14,7 @@ class FetchRepositories extends Component {
     requestComplete: null,
     repositoryCount: 0,
     paginationSection: null,
+    pages: 0,
   };
 
   fetchRepositories = (event, bool) => {
@@ -41,16 +42,17 @@ class FetchRepositories extends Component {
             repoCount++;
             repoData.push(repo);
           });
+          console.log(repoCount);
           this.setState({ repositoryData: repoData });
           this.setState({ requestComplete: true });
           this.setState({
             repositoryCount: this.state.repositoryCount + repoCount,
           });
-          console.log(this.state.repositoryCount);
-
-          //   if (repoCount === 100) {
-          //     this.fetchRepositories(null, false);
-          //   }
+          console.log(this.state.pages);
+          if (this.state.repositoryCount === 100) {
+            this.setState({ pages: this.state.pages++ });
+            this.fetchRepositories(null, false);
+          }
         })
         .catch((err) => {
           if (err) {
@@ -77,7 +79,7 @@ class FetchRepositories extends Component {
             forks={repo.forks}
             stars={repo.stargazers_count}
             language={repo.language}
-            appUrl={repo.svn_url}
+            appUrl={`${this.state.gitUsername}.github.io/${repo.name}`}
             projUrl={repo.html_url}
             recentCommit={repo.pushed_at}
             key={repo.id}
@@ -91,7 +93,13 @@ class FetchRepositories extends Component {
     if (this.state.requestComplete === true && !this.state.fetchErr) {
       this.state.paginationSection = (
         <div className="pagination">
-          <button className="previous-page btn btn-info">Previous Page</button>
+          <button
+            className="previous-page btn btn-info"
+            disabled="true
+          "
+          >
+            Previous Page
+          </button>
           <input
             type="readonly"
             className="form-control pagination-container"
