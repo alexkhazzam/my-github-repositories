@@ -3,6 +3,7 @@ import axios from "axios";
 import Repository from "../Repository/Repository";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./FetchRepositories.css";
+import SVG1 from "../SVGs/SVG1";
 
 class FetchRepositories extends Component {
   state = {
@@ -10,6 +11,7 @@ class FetchRepositories extends Component {
     fetchErr: false,
     gitUsername: null,
     invalidInput: null,
+    requestComplete: null,
     HTTPRequests: 0,
   };
 
@@ -18,7 +20,9 @@ class FetchRepositories extends Component {
     if (this.state.gitUsername === null) {
       return this.setState({ invalidInput: <p>This is a required field.</p> });
     } else {
+      this.setState({ repositoryData: [] });
       this.setState({ invalidInput: null });
+      this.setState({ requestComplete: false });
       axios
         .get(
           `https://api.github.com/users/${
@@ -27,17 +31,18 @@ class FetchRepositories extends Component {
         )
         .then((repoObj) => {
           this.setState({ fetchErr: false });
-          this.setState({ repositoryData: [] });
           const repoData = [...this.state.repositoryData];
           const responseData = repoObj.data;
           responseData.forEach((repo) => {
             repoData.push(repo);
           });
           this.setState({ repositoryData: repoData });
+          this.setState({ requestComplete: true });
         })
         .catch((err) => {
           if (err) {
             this.setState({ fetchErr: true });
+            this.setState({ requestComplete: true });
             throw err;
           }
         });
@@ -90,6 +95,13 @@ class FetchRepositories extends Component {
             </button>
           </form>
         </div>
+        {this.state.requestComplete === false ? (
+          <div className="svg-container">
+            <SVG1 />
+            <SVG1 />
+            <SVG1 />
+          </div>
+        ) : null}
         {this.state.fetchErr ? null : repositories}
       </div>
     );
