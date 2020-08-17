@@ -34,7 +34,12 @@ class FetchRepositories extends Component {
           }/repos?per_page=${100}`
         )
         .then((repoObj) => {
-          let repoCount = 0;
+          let repoCount;
+          if (!bool) {
+            repoCount = this.state.repositoryCount;
+          } else {
+            repoCount = 0;
+          }
           this.setState({ fetchErr: false });
           const repoData = [...this.state.repositoryData];
           const responseData = repoObj.data;
@@ -42,17 +47,21 @@ class FetchRepositories extends Component {
             repoCount++;
             repoData.push(repo);
           });
-          console.log(repoCount);
           this.setState({ repositoryData: repoData });
           this.setState({ requestComplete: true });
           this.setState({
             repositoryCount: this.state.repositoryCount + repoCount,
           });
-          console.log(this.state.pages);
-          if (this.state.repositoryCount === 100) {
-            this.setState({ pages: this.state.pages++ });
-            this.fetchRepositories(null, false);
-          }
+          // if (repoCount === 100) {
+          //   this.setState({ pages: this.state.pages + 1 });
+          // }
+          // if (this.state.repositoryCount / 100 <= this.state.pages) {
+          //   console.log(
+          //     `finished ${this.state.pages} ${this.state.repositoryCount}`
+          //   );
+          //   console.log(this.state.repositoryCount / 100);
+          //   this.fetchRepositories(null, false);
+          // }
         })
         .catch((err) => {
           if (err) {
