@@ -14,8 +14,9 @@ class FetchRepositories extends Component {
     requestComplete: null,
     repositoryCount: 0,
     paginationSection: null,
-    totalPages: 0,
+    finalRepoData: {},
     pageNumber: 0,
+    currentPage: 1,
   };
 
   fetchRepositories = (event, bool) => {
@@ -40,23 +41,25 @@ class FetchRepositories extends Component {
             this.setState({ repositoryCount: 0 });
           }
           this.setState({ fetchErr: false });
-          const repoData = [...this.state.repositoryData];
+          const repoData = [];
           const responseData = repoObj.data;
           responseData.forEach((repo) => {
             repoCount++;
             repoData.push(repo);
           });
-          this.setState({ repositoryData: repoData });
+          const data = { ...this.state.finalRepoData };
+          data[this.state.pageNumber] = repoData;
+          this.setState({ finalRepoData: data });
           this.setState({ requestComplete: true });
           this.setState({
             repositoryCount: this.state.repositoryCount + repoCount,
           });
-          console.log(this.state.repositoryCount);
-          console.log(this.state.pageNumber);
+          this.setState({ repositoryData: repoData });
           if (repoCount === 100) {
             this.state.pageNumber++;
             this.fetchRepositories(null, false);
           }
+          console.log(this.state.finalRepoData);
         })
         .catch((err) => {
           if (err) {
@@ -72,6 +75,14 @@ class FetchRepositories extends Component {
     this.setState({ gitUsername: event.target.value.trim() });
   };
 
+  fetchNextPage = () => {
+    this.setState({ currentPage: this.state.currentPage + 1 });
+    const respData = this.state.repositoryData[this.state.currentPage];
+    for (const data in this.state.finalRepoData) {
+      console.log(data === respData);
+    }
+  };
+
   render() {
     let repositories = <p>Oops! Username not found.</p>;
     if (!this.state.fetchErr) {
@@ -83,7 +94,11 @@ class FetchRepositories extends Component {
             forks={repo.forks}
             stars={repo.stargazers_count}
             language={repo.language}
-            appUrl={`https://${this.state.gitUsername}.github.io/${repo.name}`}
+            appUrl={
+              !repo.has_pages
+                ? null
+                : `https://${repo.owner.login}.github.io/${repo.name}`
+            }
             projUrl={repo.html_url}
             recentCommit={repo.pushed_at}
             key={repo.id}
@@ -97,19 +112,24 @@ class FetchRepositories extends Component {
     if (this.state.requestComplete === true && !this.state.fetchErr) {
       this.state.paginationSection = (
         <div className="pagination">
+          <p className="current-page">
+            Current Page: <span>{this.state.currentPage}</span>
+          </p>
           <button
             className="previous-page btn btn-info"
-            disabled="true
-          "
+            disabled={() => this.checkCurrentPageNumber()}
           >
             Previous Page
           </button>
-          <input
-            type="readonly"
-            className="form-control pagination-container"
-            placeholder={`Page Count: ${this.state.totalPages}`}
-          />
-          <button className="next-page btn btn-info">Next Page</button>
+          <p>
+            Page Count: <span>{this.state.pageNumber}</span>
+          </p>
+          <button
+            className="next-page btn btn-info"
+            onClick={() => this.fetchNextPage()}
+          >
+            Next Page
+          </button>
         </div>
       );
     } else {

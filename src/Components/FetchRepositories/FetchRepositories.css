@@ -61,16 +61,6 @@
   width: 100%;
 }
 
-.pagination-container {
-  width: fit-content;
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 0px;
-  border-right: none;
-  border-left: none;
-  border-bottom: none;
-}
-
 .previous-page,
 .next-page {
   height: 2.35rem;
@@ -87,12 +77,33 @@
   border-top-right-radius: 0.25rem;
 }
 
+.next-page-disabled {
+  cursor: not-allowed;
+}
+
+.pagination p {
+  position: relative;
+  margin: 0px;
+  padding: 5px;
+  border-top: 1px solid #ced4da;
+}
+
+.pagination p span {
+  font-weight: bold;
+}
+
 .pagination {
   margin-top: 100px;
   width: 75%;
   margin-right: auto;
   margin-left: auto;
   animation: 1s slide-left-pagination;
+}
+
+.pagination p:first-of-type {
+  position: absolute;
+  top: 200px;
+  border-top: none;
 }
 
 @keyframes slide-left-pagination {
@@ -117,12 +128,5 @@
     height: 100%;
     padding-left: 3px;
     padding-right: 3px;
-  }
-
-  .pagination-container {
-    text-align: center;
-    padding-top: 25px;
-    padding-right: 0;
-    padding-left: 0;
   }
 }

@@ -63,17 +63,19 @@ const Repository = (props) => {
   return (
     <div className={"repo"}>
       <h2 className={"repo__header"}>{props.title}</h2>
-      <p className={"repo__item description"}>
-        <img
-          src={descriptionImg}
-          width="20"
-          height="20"
-          className={"icon"}
-          alt=""
-        />
-        <span>Description: </span>
-        {props.description}
-      </p>
+      {props.description === null ? null : (
+        <p className={"repo__item description"}>
+          <img
+            src={descriptionImg}
+            width="20"
+            height="20"
+            className={"icon"}
+            alt=""
+          />
+          <span>Description: </span>
+          {props.description}
+        </p>
+      )}
       <p className={"repo__item"}>
         <img src={forkImg} width="20" height="20" className={"icon"} alt="" />
         <span>Forks: </span>
@@ -84,31 +86,35 @@ const Repository = (props) => {
         <span>Stargazers Count: </span>
         {props.stars}
       </p>
-      <p className={"repo__item"}>
-        <img
-          src={languageImg}
-          width="20"
-          height="20"
-          className={"icon"}
-          alt=""
-        />
-        <span>Language: </span>
-        {props.language}
-        <span className={color}></span>
-      </p>
-      <p className={"repo__item"}>
-        <img
-          src={websiteUrlImg}
-          width="20"
-          height="20"
-          className={"icon"}
-          alt=""
-        />
-        <span>Website URL: </span>
-        <a href={props.appUrl} target="_blank" rel="noopenrer noreferrer">
-          {props.appUrl}
-        </a>
-      </p>
+      {props.language === null ? null : (
+        <p className={"repo__item"}>
+          <img
+            src={languageImg}
+            width="20"
+            height="20"
+            className={"icon"}
+            alt=""
+          />
+          <span>Language: </span>
+          {props.language}
+          <span className={color}></span>
+        </p>
+      )}
+      {props.appUrl === null ? null : (
+        <p className={"repo__item"}>
+          <img
+            src={websiteUrlImg}
+            width="20"
+            height="20"
+            className={"icon"}
+            alt=""
+          />
+          <span>Website URL: </span>
+          <a href={props.appUrl} target="_blank" rel="noopenrer noreferrer">
+            {props.appUrl}
+          </a>
+        </p>
+      )}
       <p className={"repo__item"}>
         <img
           src={codeUrlImg}
