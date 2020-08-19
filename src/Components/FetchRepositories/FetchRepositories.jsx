@@ -16,7 +16,7 @@ class FetchRepositories extends Component {
     paginationSection: null,
     finalRepoData: {},
     pageNumber: 0,
-    currentPage: 1,
+    currentPage: 0,
   };
 
   fetchRepositories = (event, bool) => {
@@ -36,6 +36,7 @@ class FetchRepositories extends Component {
           }/repos?per_page=${100}&page=${this.state.pageNumber}`
         )
         .then((repoObj) => {
+          console.log(`${repoObj} [${this.state.pageNumber}]`);
           let repoCount = 0;
           if (bool) {
             this.setState({ repositoryCount: 0 });
@@ -49,6 +50,7 @@ class FetchRepositories extends Component {
           });
           const data = { ...this.state.finalRepoData };
           data[this.state.pageNumber] = repoData;
+          console.log(data);
           this.setState({ finalRepoData: data });
           this.setState({ requestComplete: true });
           this.setState({
@@ -59,7 +61,6 @@ class FetchRepositories extends Component {
             this.state.pageNumber++;
             this.fetchRepositories(null, false);
           }
-          console.log(this.state.finalRepoData);
         })
         .catch((err) => {
           if (err) {
@@ -77,10 +78,15 @@ class FetchRepositories extends Component {
 
   fetchNextPage = () => {
     this.setState({ currentPage: this.state.currentPage + 1 });
-    const respData = this.state.repositoryData[this.state.currentPage];
-    for (const data in this.state.finalRepoData) {
-      console.log(data === respData);
+    if (this.state.currentPage === this.state.pageNumber - 1) {
+      const nextPageBtn = document.querySelector(".next-page");
+      nextPageBtn.disabled = "true";
     }
+    console.log(this.state.finalRepoData);
+  };
+
+  fetchPreviousPage = () => {
+    this.setState({ pageNumber: this.state.pageNumber - 1 });
   };
 
   render() {
@@ -117,7 +123,8 @@ class FetchRepositories extends Component {
           </p>
           <button
             className="previous-page btn btn-info"
-            disabled={() => this.checkCurrentPageNumber()}
+            disabled={this.state.currentPage > 1 ? false : true}
+            onClick={() => this.fetchPreviousPage()}
           >
             Previous Page
           </button>
@@ -127,6 +134,7 @@ class FetchRepositories extends Component {
           <button
             className="next-page btn btn-info"
             onClick={() => this.fetchNextPage()}
+            disabled={this.state.pageNumber === 1 ? true : false}
           >
             Next Page
           </button>
